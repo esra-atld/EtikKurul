@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using EtikKurul.Api.Data;
 using EtikKurul.Api.Entities;
 using EtikKurul.Api.Services;
@@ -78,7 +79,10 @@ builder.Services.AddCors(secenek =>
         .AllowAnyMethod()));
 
 // ───────────── 5) CONTROLLER'LAR VE SWAGGER ─────────────
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    // Enum'lar JSON'da sayı değil metin olsun: "durum": "Taslak"
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(secenek =>
 {

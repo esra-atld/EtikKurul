@@ -101,6 +101,14 @@ Tarayıcıda **http://localhost:5168/swagger** adresini açın.
 | GET | `/api/admin/kullanicilar?arama=` | Admin | Kullanıcı listesi |
 | PUT | `/api/admin/kullanicilar/{id}/roller` | Admin | Rol atama |
 | PUT | `/api/admin/kullanicilar/{id}/aktiflik` | Admin | Aktif/pasif yapma |
+| GET | `/api/tanimlar/secenekler` | Giriş yapmış herkes | Formdaki çoklu seçim seçenekleri |
+| GET | `/api/tanimlar/ek-turleri` | Giriş yapmış herkes | Dilekçe, Başvuru Formu, Ek-1…Ek-11 |
+| GET | `/api/basvurular` | Giriş yapmış herkes | Kendi başvurularım |
+| POST | `/api/basvurular` | Giriş yapmış herkes | Yeni taslak başvuru |
+| GET | `/api/basvurular/{id}` | Başvuru sahibi | Başvurunun tamamı (kaldığı yerden devam) |
+| PUT | `/api/basvurular/{id}` | Başvuru sahibi | Taslağı kaydet (wizard her adımda formun tamamını gönderir) |
+| DELETE | `/api/basvurular/{id}` | Başvuru sahibi | Taslağı sil |
+| GET | `/api/basvurular/{id}/gerekli-ekler` | Başvuru sahibi | Bu başvuruda hangi ekler zorunlu, kaçı yüklendi |
 
 **Roller:** `Basvuran`, `EvrakKayit`, `Dekanlik`, `EtikKurul`, `Admin`
 
