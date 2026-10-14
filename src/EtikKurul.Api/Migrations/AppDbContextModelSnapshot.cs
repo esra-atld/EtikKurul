@@ -22,6 +22,753 @@ namespace EtikKurul.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("EtikKurul.Api.Entities.Basvuru", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Amac")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnahtarKelimeler")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ArastirmaAdi")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ArastirmaNiteligi")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ArastirmaNiteligiDiger")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("BagliKurum")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("BasvuranKullaniciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BasvuruTuru")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("BeklenenKatilimciSayisi")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("DeneyVeyaBiyolojikMateryalVarMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Durum")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("EvrakKayitNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("EvrakKayitTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("FormKilitliMi")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("GonderimTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GonulluKatilimOnlemleri")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("GuncellemeTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("KatilimciGrubuDiger")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("KatilmaCikmaKosullari")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Keywords")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("KisilikHaklariAciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("KisilikHaklariKorunuyorMu")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KonuKapsamLiteratur")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MateryalYontem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OlusturmaTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OzgunDeger")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResitOlmayanKatilimciAciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("ResitOlmayanKatilimciVarMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SaglikTehdidiAciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("SaglikTehdidiVarMi")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("SatirVersiyonu")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("SonAdim")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TahminiSureAy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TurkceOzet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UstBasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UygulamaDiger")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool?>("VeriAraciBaskasinaAitMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("VeriToplamaAraciDiger")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateOnly?>("VeriToplamaBaslangic")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("VeriToplamaBitis")
+                        .HasColumnType("date");
+
+                    b.Property<string>("YabanciDilOzet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YanlisBilgiVeyaGizlilikAciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("YanlisBilgiVeyaGizlilikGerekiyorMu")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("YayginEtki")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YeterliBilgiAciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("YeterliBilgiVeriliyorMu")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuranKullaniciId");
+
+                    b.HasIndex("Durum");
+
+                    b.HasIndex("EvrakKayitNo")
+                        .IsUnique()
+                        .HasFilter("[EvrakKayitNo] IS NOT NULL");
+
+                    b.HasIndex("UstBasvuruId");
+
+                    b.ToTable("Basvurular");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruArastirmacisi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdSoyad")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("GorevYeriAdres")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Sira")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Telefon")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Unvan")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("BasvuruArastirmacilari");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruDestekKurumu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Durum")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("KurumTuru")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("BasvuruDestekKurumlari");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruHareketi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IslemYapanKullaniciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OncekiDurum")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("YeniDurum")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IslemYapanKullaniciId");
+
+                    b.HasIndex("BasvuruId", "Tarih");
+
+                    b.ToTable("BasvuruHareketleri");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruSecenek", b =>
+                {
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecenekId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BasvuruId", "SecenekId");
+
+                    b.HasIndex("SecenekId");
+
+                    b.ToTable("BasvuruSecenekleri");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Bildirim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AliciEmail")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("AliciKullaniciId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("BasariliMi")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("GonderimTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HataMesaji")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Icerik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Konu")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("OlusturmaTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AliciKullaniciId");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("Bildirimler");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Ek", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BasvuruArastirmacisiId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("BoyutByte")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("EkTuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IcerikTuru")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("KayitliDosyaAdi")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("OrijinalDosyaAdi")
+                        .IsRequired()
+                        .HasMaxLength(260)
+                        .HasColumnType("nvarchar(260)");
+
+                    b.Property<DateTime>("YuklemeTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("YukleyenKullaniciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruArastirmacisiId");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.HasIndex("EkTuruId");
+
+                    b.HasIndex("KayitliDosyaAdi")
+                        .IsUnique();
+
+                    b.HasIndex("YukleyenKullaniciId");
+
+                    b.ToTable("Ekler");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.EkTuru", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("AktifMi")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CokluDosyaMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Kod")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("Sira")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SistemUretirMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ZorunlulukKurali")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Kod")
+                        .IsUnique();
+
+                    b.ToTable("EkTurleri");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ad = "Dilekçe",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "DILEKCE",
+                            Sira = 1,
+                            SistemUretirMi = true,
+                            ZorunlulukKurali = "HerZaman"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ad = "Etik Kurul Başvuru Formu",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "BASVURU_FORMU",
+                            Sira = 2,
+                            SistemUretirMi = true,
+                            ZorunlulukKurali = "HerZaman"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Aciklama = "Tez çalışmalarında danışman ve tez yazarının ıslak imzası gerekir.",
+                            Ad = "Ek-1 Taahhütname",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "EK1",
+                            Sira = 3,
+                            SistemUretirMi = true,
+                            ZorunlulukKurali = "HerZaman"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ad = "Ek-2 Gönüllü Katılım Formu",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "EK2",
+                            Sira = 4,
+                            SistemUretirMi = true,
+                            ZorunlulukKurali = "HerZaman"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Aciklama = "18 yaş altındaki katılımcılar için.",
+                            Ad = "Ek-3 Çocuk Rıza Formu",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "EK3",
+                            Sira = 5,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "ResitOlmayanKatilimciVarsa"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Aciklama = "Destekleyen kuruluş ile sorumlu araştırmacı arasında sorumlulukların paylaşıldığına dair protokol, varsa sözleşmeler.",
+                            Ad = "Ek-4 Destekleyen Kuruluş Protokolü / Taahhütnamesi",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "EK4",
+                            Sira = 6,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "DestekleyenKurumVarsa"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Ad = "Ek-5 Araştırma Broşürü, Proforma Faturalar vb.",
+                            AktifMi = true,
+                            CokluDosyaMi = true,
+                            Kod = "EK5",
+                            Sira = 7,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "Opsiyonel"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Aciklama = "Enstitüden tez konusunun onaylandığına dair belge ve öğrencinin durumunu gösterir belge.",
+                            Ad = "Ek-6 Tez Konusu Onayı ve Öğrenci Belgesi",
+                            AktifMi = true,
+                            CokluDosyaMi = true,
+                            Kod = "EK6",
+                            Sira = 8,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "TezCalismasiysa"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Aciklama = "Her araştırmacı için ayrı dosya.",
+                            Ad = "Ek-7 Özgeçmişler (ARBİS formatında)",
+                            AktifMi = true,
+                            CokluDosyaMi = true,
+                            Kod = "EK7",
+                            Sira = 9,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "HerArastirmaciIcin"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Aciklama = "Elektronik başvuruda gerekmiyor (hocayla teyit edilecek).",
+                            Ad = "Ek-8 İmzalı Formları İçeren Flash Bellek",
+                            AktifMi = false,
+                            CokluDosyaMi = false,
+                            Kod = "EK8",
+                            Sira = 10,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "Kullanilmiyor"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Ad = "Ek-9 Proje Örneği (TÜBİTAK, BAP, Lisansüstü Tez)",
+                            AktifMi = true,
+                            CokluDosyaMi = false,
+                            Kod = "EK9",
+                            Sira = 11,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "ProjeVeyaTezIse"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Ad = "Ek-10 Veri Toplama Araçları (anket, ölçek vb.)",
+                            AktifMi = true,
+                            CokluDosyaMi = true,
+                            Kod = "EK10",
+                            Sira = 12,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "VeriToplamaAraciVarsa"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Aciklama = "Kullanılacak veri toplama araçları başkalarına aitse alınan izin.",
+                            Ad = "Ek-11 Veri Toplama Aracı Kullanım İzni",
+                            AktifMi = true,
+                            CokluDosyaMi = true,
+                            Kod = "EK11",
+                            Sira = 13,
+                            SistemUretirMi = false,
+                            ZorunlulukKurali = "VeriAraciBaskasinaAitse"
+                        });
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.GiderKalemi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sira")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tur")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Tutar")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("GiderKalemleri");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.IsPaketi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Kimler")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("No")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sure")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("IsPaketleri");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Karar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("DogrulamaKodu")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("KararBelgesiDosyaAdi")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("KararNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("KararTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("KararTuru")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("KararVerenKullaniciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OlusturmaTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId")
+                        .IsUnique();
+
+                    b.HasIndex("DogrulamaKodu")
+                        .IsUnique();
+
+                    b.HasIndex("KararNo")
+                        .IsUnique();
+
+                    b.HasIndex("KararVerenKullaniciId");
+
+                    b.ToTable("Kararlar");
+                });
+
             modelBuilder.Entity("EtikKurul.Api.Entities.Kullanici", b =>
                 {
                     b.Property<string>("Id")
@@ -119,6 +866,432 @@ namespace EtikKurul.Api.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.LiteraturKaynagi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Kaynak")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Sira")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tur")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("LiteraturKaynaklari");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Risk", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BPlani")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsPaketiNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RiskAciklamasi")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("Riskler");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Secenek", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AciklamaGerekirMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("AktifMi")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CocukRizasiGerektirirMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Grup")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Sira")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Grup", "Sira");
+
+                    b.ToTable("Secenekler");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AciklamaGerekirMi = false,
+                            Ad = "Anket",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AciklamaGerekirMi = false,
+                            Ad = "Görüşme",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AciklamaGerekirMi = false,
+                            Ad = "Veri kaynakları taraması",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AciklamaGerekirMi = false,
+                            Ad = "Ölçek (skala) geliştirme çalışması",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AciklamaGerekirMi = false,
+                            Ad = "Ses ve görüntü kayıtları",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AciklamaGerekirMi = false,
+                            Ad = "Dosya taraması",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AciklamaGerekirMi = false,
+                            Ad = "Sistem-model geliştirme çalışması",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AciklamaGerekirMi = true,
+                            Ad = "Diğer",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "VeriToplamaAraci",
+                            Sira = 8
+                        },
+                        new
+                        {
+                            Id = 101,
+                            AciklamaGerekirMi = false,
+                            Ad = "Okulöncesi Çocuklar",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = true,
+                            Grup = "KatilimciGrubu",
+                            Sira = 1
+                        },
+                        new
+                        {
+                            Id = 102,
+                            AciklamaGerekirMi = false,
+                            Ad = "İlköğretim Öğrencileri",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = true,
+                            Grup = "KatilimciGrubu",
+                            Sira = 2
+                        },
+                        new
+                        {
+                            Id = 103,
+                            AciklamaGerekirMi = false,
+                            Ad = "Lise Öğrencileri",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = true,
+                            Grup = "KatilimciGrubu",
+                            Sira = 3
+                        },
+                        new
+                        {
+                            Id = 104,
+                            AciklamaGerekirMi = false,
+                            Ad = "Üniversite Öğrencileri",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 4
+                        },
+                        new
+                        {
+                            Id = 105,
+                            AciklamaGerekirMi = false,
+                            Ad = "Çocuk İşçiler",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = true,
+                            Grup = "KatilimciGrubu",
+                            Sira = 5
+                        },
+                        new
+                        {
+                            Id = 106,
+                            AciklamaGerekirMi = false,
+                            Ad = "Yetişkinler",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 6
+                        },
+                        new
+                        {
+                            Id = 107,
+                            AciklamaGerekirMi = false,
+                            Ad = "Yaşlılar",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 7
+                        },
+                        new
+                        {
+                            Id = 108,
+                            AciklamaGerekirMi = false,
+                            Ad = "Kadınlar",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 8
+                        },
+                        new
+                        {
+                            Id = 109,
+                            AciklamaGerekirMi = false,
+                            Ad = "Erkekler",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 9
+                        },
+                        new
+                        {
+                            Id = 110,
+                            AciklamaGerekirMi = false,
+                            Ad = "İşsiz Yetişkinler",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 10
+                        },
+                        new
+                        {
+                            Id = 111,
+                            AciklamaGerekirMi = false,
+                            Ad = "Zihinsel Engelli Bireyler",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 11
+                        },
+                        new
+                        {
+                            Id = 112,
+                            AciklamaGerekirMi = false,
+                            Ad = "Fiziksel Engelli Bireyler",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 12
+                        },
+                        new
+                        {
+                            Id = 113,
+                            AciklamaGerekirMi = false,
+                            Ad = "Tutuklular",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 13
+                        },
+                        new
+                        {
+                            Id = 114,
+                            AciklamaGerekirMi = true,
+                            Ad = "Diğer",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "KatilimciGrubu",
+                            Sira = 14
+                        },
+                        new
+                        {
+                            Id = 201,
+                            AciklamaGerekirMi = false,
+                            Ad = "Anket",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 1
+                        },
+                        new
+                        {
+                            Id = 202,
+                            AciklamaGerekirMi = false,
+                            Ad = "Mülakat",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 2
+                        },
+                        new
+                        {
+                            Id = 203,
+                            AciklamaGerekirMi = false,
+                            Ad = "Gözlem",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 3
+                        },
+                        new
+                        {
+                            Id = 204,
+                            AciklamaGerekirMi = false,
+                            Ad = "Bilgisayar ortamında test/anket",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 4
+                        },
+                        new
+                        {
+                            Id = 205,
+                            AciklamaGerekirMi = false,
+                            Ad = "Görüntü kaydı",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 5
+                        },
+                        new
+                        {
+                            Id = 206,
+                            AciklamaGerekirMi = false,
+                            Ad = "Ses kaydı",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 6
+                        },
+                        new
+                        {
+                            Id = 207,
+                            AciklamaGerekirMi = false,
+                            Ad = "Görüşme",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 7
+                        },
+                        new
+                        {
+                            Id = 208,
+                            AciklamaGerekirMi = true,
+                            Ad = "Diğer",
+                            AktifMi = true,
+                            CocukRizasiGerektirirMi = false,
+                            Grup = "Uygulama",
+                            Sira = 8
+                        });
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.VeriToplamaYeri", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sira")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasvuruId");
+
+                    b.ToTable("VeriToplamaYerleri");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -254,6 +1427,209 @@ namespace EtikKurul.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("EtikKurul.Api.Entities.Basvuru", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Kullanici", "BasvuranKullanici")
+                        .WithMany()
+                        .HasForeignKey("BasvuranKullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "UstBasvuru")
+                        .WithMany()
+                        .HasForeignKey("UstBasvuruId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("BasvuranKullanici");
+
+                    b.Navigation("UstBasvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruArastirmacisi", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("Arastirmacilar")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruDestekKurumu", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("DestekKurumlari")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruHareketi", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("Hareketler")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.Kullanici", "IslemYapanKullanici")
+                        .WithMany()
+                        .HasForeignKey("IslemYapanKullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+
+                    b.Navigation("IslemYapanKullanici");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.BasvuruSecenek", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("Secimler")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.Secenek", "Secenek")
+                        .WithMany()
+                        .HasForeignKey("SecenekId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+
+                    b.Navigation("Secenek");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Bildirim", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Kullanici", "AliciKullanici")
+                        .WithMany()
+                        .HasForeignKey("AliciKullaniciId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany()
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AliciKullanici");
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Ek", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.BasvuruArastirmacisi", "BasvuruArastirmacisi")
+                        .WithMany()
+                        .HasForeignKey("BasvuruArastirmacisiId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("Ekler")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.EkTuru", "EkTuru")
+                        .WithMany()
+                        .HasForeignKey("EkTuruId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.Kullanici", "YukleyenKullanici")
+                        .WithMany()
+                        .HasForeignKey("YukleyenKullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+
+                    b.Navigation("BasvuruArastirmacisi");
+
+                    b.Navigation("EkTuru");
+
+                    b.Navigation("YukleyenKullanici");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.GiderKalemi", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("GiderKalemleri")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.IsPaketi", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("IsPaketleri")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Karar", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithOne("Karar")
+                        .HasForeignKey("EtikKurul.Api.Entities.Karar", "BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.Kullanici", "KararVerenKullanici")
+                        .WithMany()
+                        .HasForeignKey("KararVerenKullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+
+                    b.Navigation("KararVerenKullanici");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.LiteraturKaynagi", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("LiteraturKaynaklari")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Risk", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("Riskler")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.VeriToplamaYeri", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("VeriToplamaYerleri")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -303,6 +1679,31 @@ namespace EtikKurul.Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EtikKurul.Api.Entities.Basvuru", b =>
+                {
+                    b.Navigation("Arastirmacilar");
+
+                    b.Navigation("DestekKurumlari");
+
+                    b.Navigation("Ekler");
+
+                    b.Navigation("GiderKalemleri");
+
+                    b.Navigation("Hareketler");
+
+                    b.Navigation("IsPaketleri");
+
+                    b.Navigation("Karar");
+
+                    b.Navigation("LiteraturKaynaklari");
+
+                    b.Navigation("Riskler");
+
+                    b.Navigation("Secimler");
+
+                    b.Navigation("VeriToplamaYerleri");
                 });
 #pragma warning restore 612, 618
         }
