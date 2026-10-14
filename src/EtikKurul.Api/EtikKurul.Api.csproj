@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>EtikKurul.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Kullanıcı, şifre ve rol altyapısı -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.*" />
+    <!-- Giriş yapan kullanıcıya JWT (token) ile kimlik doğrulama -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.*" />
+    <!-- Veritabanı: Entity Framework Core + MSSQL -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <!-- Güvenlik yaması: SqlClient'ın getirdiği eski sürümü günceller (NU1902/NU1903 uyarısı) -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.*" />
+    <!-- Swagger arayüzü -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.*" />
+  </ItemGroup>
+
+</Project>
