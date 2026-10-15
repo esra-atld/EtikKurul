@@ -20,6 +20,9 @@
     </PackageReference>
     <!-- Güvenlik yaması: SqlClient'ın getirdiği eski sürümü günceller (NU1902/NU1903 uyarısı) -->
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.*" />
+    <!-- PDF üretimi (başvuru paketi) ve QR kod -->
+    <PackageReference Include="QuestPDF" Version="2025.*" />
+    <PackageReference Include="QRCoder" Version="1.*" />
     <!-- Swagger arayüzü -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.*" />
   </ItemGroup>

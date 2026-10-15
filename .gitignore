@@ -480,3 +480,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Yüklenen başvuru belgeleri (kişisel veri, GitHub'a gitmesin)
+App_Data/

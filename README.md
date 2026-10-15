@@ -109,6 +109,20 @@ Tarayıcıda **http://localhost:5168/swagger** adresini açın.
 | PUT | `/api/basvurular/{id}` | Başvuru sahibi | Taslağı kaydet (wizard her adımda formun tamamını gönderir) |
 | DELETE | `/api/basvurular/{id}` | Başvuru sahibi | Taslağı sil |
 | GET | `/api/basvurular/{id}/gerekli-ekler` | Başvuru sahibi | Bu başvuruda hangi ekler zorunlu, kaçı yüklendi |
+| GET | `/api/basvurular/{id}/eksikler` | Başvuru sahibi | Formda boş zorunlu alanlar (adım numarasıyla) |
+| GET | `/api/basvurular/{id}/pdf` | Başvuru sahibi | Başvuru paketi PDF'i (kilitli değilse "TASLAK" filigranlı) |
+| POST | `/api/basvurular/{id}/kilitle` | Başvuru sahibi | Eksik yoksa formu kilitler → imzalı belge bekleniyor |
+| POST | `/api/basvurular/{id}/kilidi-ac` | Başvuru sahibi | Tekrar düzenlemek için kilidi açar (yüklenen belgeler silinir) |
+| GET | `/api/basvurular/{id}/ekler` | Başvuru sahibi | Yüklenen belgeler |
+| POST | `/api/basvurular/{id}/ekler` | Başvuru sahibi | Islak imzalı PDF yükle (multipart) |
+| GET | `/api/basvurular/{id}/ekler/{ekId}/dosya` | Başvuru sahibi | Belgeyi indir |
+| DELETE | `/api/basvurular/{id}/ekler/{ekId}` | Başvuru sahibi | Belgeyi sil |
+| POST | `/api/basvurular/{id}/gonder` | Başvuru sahibi | Zorunlu belgeler tamamsa gönder → Evrak Kayıt |
+
+**Başvuru akışı (başvuran tarafı):**
+`Taslak` → (kilitle) → `ImzaliBelgeBekleniyor` → (belgeleri yükle, gönder) → `EvrakKayitta`
+
+**Wizard adımları:** 1 Genel bilgiler · 2 Araştırmacılar · 3 Veri toplama · 4 Destek ve giderler · 5 Proje içeriği · 6 İş paketleri ve riskler · 7 Etik sorular · 8 Önizleme ve çıktı · 9 Belge yükleme ve gönderme
 
 **Roller:** `Basvuran`, `EvrakKayit`, `Dekanlik`, `EtikKurul`, `Admin`
 

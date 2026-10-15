@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,6 +70,12 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenServisi>();
 
+// ───────────── PDF VE DOSYA ─────────────
+// QuestPDF: üniversite/öğrenci projeleri için ücretsiz "Community" lisansı
+QuestPDF.Settings.License = LicenseType.Community;
+builder.Services.AddSingleton<BasvuruPdfServisi>();
+builder.Services.AddSingleton<DosyaDepolamaServisi>();
+
 // ───────────── 4) FRONTEND ERİŞİMİ (CORS) ─────────────
 // Frontend farklı bir adreste (ör. React: localhost:5173) çalışacağı için izin veriyoruz.
 var frontendAdresleri = builder.Configuration.GetSection("FrontendAdresleri").Get<string[]>() ?? [];
@@ -82,7 +89,11 @@ builder.Services.AddCors(secenek =>
 builder.Services
     .AddControllers()
     // Enum'lar JSON'da sayı değil metin olsun: "durum": "Taslak"
-    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(o =>
+    {
+        o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        o.JsonSerializerOptions.Converters.Add(new UtcTarihDonusturucu()); // tarihler hep UTC ('Z' ile)
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(secenek =>
 {
