@@ -124,7 +124,8 @@ public class ArastirmaciDto
     [MaxLength(100)] public string? Unvan { get; set; }
     [Required(ErrorMessage = "Araştırmacının adı soyadı boş olamaz.")]
     [MaxLength(200)] public string AdSoyad { get; set; } = string.Empty;
-    [MaxLength(30)] public string? Telefon { get; set; }
+    [RegularExpression(@"^0\d{10}$", ErrorMessage = "Araştırmacı telefonu 0 ile başlayan 11 haneli olmalı (ör. 05551234567).")]
+    public string? Telefon { get; set; }
     [MaxLength(256)] [EmailAddress(ErrorMessage = "Araştırmacı e-postası geçersiz.")] public string? Email { get; set; }
     [MaxLength(500)] public string? GorevYeriAdres { get; set; }
 }

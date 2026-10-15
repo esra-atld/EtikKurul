@@ -165,3 +165,17 @@ Frontend ayrı bir projede olacak ve bu API'yi Swagger'daki adreslerle çağıra
 ## 7. Güvenlik notu
 
 `appsettings.Development.json` içindeki şifre, JWT anahtarı ve admin şifresi **sadece geliştirme içindir**. Canlıya alırken hepsi değiştirilmeli ve GitHub'a konmamalı.
+
+---
+
+## Frontend (React)
+
+Ekranlar `frontend/` klasöründe. Backend çalışırken ikinci bir terminalde:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+→ **http://localhost:5173** (ayrıntılar: `frontend/README.md`)

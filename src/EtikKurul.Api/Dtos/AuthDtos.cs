@@ -29,7 +29,7 @@ public class KayitIstegi
     public string KurumsalEmail { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Telefon zorunludur.")]
-    [Phone(ErrorMessage = "Geçerli bir telefon numarası girin.")]
+    [RegularExpression(@"^0\d{10}$", ErrorMessage = "Telefon numarası 0 ile başlayan 11 haneli olmalı (ör. 05551234567).")]
     public string Telefon { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Adres zorunludur.")]

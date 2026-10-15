@@ -46,7 +46,7 @@ public class BasvuruPdfServisi(IConfiguration ayarlar)
                 if (taslakMi)
                 {
                     sayfa.Foreground().AlignCenter().AlignMiddle().Rotate(-35)
-                        .Text("TASLAK — İMZALAMAYINIZ").FontSize(48).Bold().FontColor(Colors.Red.Lighten3);
+                        .Text("TASLAK — İMZALAMAYINIZ").FontSize(40).Bold().FontColor(Colors.Red.Lighten4);
                 }
 
                 sayfa.Content().PaddingTop(10).Column(col =>
@@ -159,12 +159,12 @@ public class BasvuruPdfServisi(IConfiguration ayarlar)
         {
             t.ColumnsDefinition(c =>
             {
-                c.RelativeColumn(2.2f);
-                c.RelativeColumn(2.6f);
-                c.RelativeColumn(1.6f);
-                c.RelativeColumn(2.2f);
-                c.RelativeColumn(2.4f);
-                c.RelativeColumn(1.4f);
+                c.RelativeColumn(2.1f); // Görevi
+                c.RelativeColumn(2.4f); // Unvan, Ad-Soyad
+                c.RelativeColumn(2.1f); // Telefon (11 hane tek satıra sığsın)
+                c.RelativeColumn(2.6f); // e-posta
+                c.RelativeColumn(2.1f); // Görev yeri
+                c.RelativeColumn(1.2f); // İmza
             });
             foreach (var h in new[] { "Görevi", "Unvanı, Ad-Soyadı", "Telefon", "e-posta", "Görev yeri / Adres", "İmza" })
                 BaslikHucresi(t.Cell(), h);

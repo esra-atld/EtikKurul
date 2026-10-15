@@ -59,13 +59,19 @@ public static class BasvuruDogrulayici
         // ───── 3. Veri toplama ─────
         var veriAraclari = Secilenler(b, SecenekGrubu.VeriToplamaAraci);
         if (veriAraclari.Count == 0)
-            e.Add(new(3, "SecenekIdleri", "En az bir veri toplama aracı türü seçin."));
+            e.Add(new(3, "VeriToplamaAraclari", "En az bir veri toplama aracı türü seçin."));
         if (veriAraclari.Any(s => s.AciklamaGerekirMi) && Bos(b.VeriToplamaAraciDiger))
             e.Add(new(3, nameof(b.VeriToplamaAraciDiger), "Veri toplama aracı 'Diğer' ise açıklayın."));
         if (b.VeriToplamaBaslangic is null || b.VeriToplamaBitis is null)
             e.Add(new(3, nameof(b.VeriToplamaBaslangic), "Veri toplama başlangıç ve bitiş tarihlerini girin."));
-        else if (b.VeriToplamaBitis < b.VeriToplamaBaslangic)
-            e.Add(new(3, nameof(b.VeriToplamaBitis), "Bitiş tarihi başlangıç tarihinden önce olamaz."));
+        else
+        {
+            var bugun = DateOnly.FromDateTime(TurkiyeSaati.Simdi);
+            if (b.VeriToplamaBaslangic < bugun)
+                e.Add(new(3, nameof(b.VeriToplamaBaslangic), "Başlangıç tarihi bugünden önce olamaz."));
+            if (b.VeriToplamaBitis < b.VeriToplamaBaslangic)
+                e.Add(new(3, nameof(b.VeriToplamaBitis), "Bitiş tarihi başlangıç tarihinden önce olamaz."));
+        }
         if (b.TahminiSureAy is null or <= 0)
             e.Add(new(3, nameof(b.TahminiSureAy), "Tahmini araştırma süresini (ay) girin."));
         if (b.VeriToplamaYerleri.Count == 0)
@@ -109,16 +115,16 @@ public static class BasvuruDogrulayici
 
         var katilimcilar = Secilenler(b, SecenekGrubu.KatilimciGrubu);
         if (katilimcilar.Count == 0)
-            e.Add(new(7, "SecenekIdleri", "Soru 17: Katılımcıları tanımlayan en az bir seçenek işaretleyin."));
+            e.Add(new(7, "KatilimciGruplari", "Soru 17: Katılımcıları tanımlayan en az bir seçenek işaretleyin."));
         if (katilimcilar.Any(s => s.AciklamaGerekirMi) && Bos(b.KatilimciGrubuDiger))
             e.Add(new(7, nameof(b.KatilimciGrubuDiger), "Soru 17: 'Diğer' katılımcı grubunu belirtin."));
         if (katilimcilar.Any(s => s.CocukRizasiGerektirirMi) && b.ResitOlmayanKatilimciVarMi == false)
             e.Add(new(7, nameof(b.ResitOlmayanKatilimciVarMi),
-                "18 yaş altı bir katılımcı grubu seçtiniz; Soru 12'yi 'Evet' olarak cevaplayın."));
+                "18 yaş altı bir katılımcı grubu seçtiniz; 12. soruyu 'Evet' olarak cevaplayın."));
 
         var uygulamalar = Secilenler(b, SecenekGrubu.Uygulama);
         if (uygulamalar.Count == 0)
-            e.Add(new(7, "SecenekIdleri", "Soru 18: Çalışmada yer alacak en az bir uygulamayı işaretleyin."));
+            e.Add(new(7, "Uygulamalar", "Soru 18: Çalışmada yer alacak en az bir uygulamayı işaretleyin."));
         if (uygulamalar.Any(s => s.AciklamaGerekirMi) && Bos(b.UygulamaDiger))
             e.Add(new(7, nameof(b.UygulamaDiger), "Soru 18: 'Diğer' uygulamayı belirtin."));
 
@@ -130,7 +136,7 @@ public static class BasvuruDogrulayici
         string soruNo, string alan)
     {
         if (cevap is null)
-            e.Add(new(7, alan, $"Soru {soruNo}'u Evet/Hayır olarak cevaplayın."));
+            e.Add(new(7, alan, $"{soruNo}. soruyu Evet/Hayır olarak cevaplayın."));
         else if (cevap == aciklamaGerektirenCevap && Bos(aciklama))
             e.Add(new(7, alan, $"Soru {soruNo}: '{(aciklamaGerektirenCevap ? "Evet" : "Hayır")}' cevabı için açıklama yazın."));
     }
