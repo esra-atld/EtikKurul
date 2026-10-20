@@ -59,4 +59,59 @@ public static class BaslangicVerisi
         await kullaniciYoneticisi.AddToRoleAsync(admin, Roller.Admin);
         logger.LogInformation("Admin kullanıcısı oluşturuldu: {Email}", adminEmail);
     }
+
+    /// <summary>
+    /// SADECE GELİŞTİRME İÇİN: appsettings.Development.json → "TestKullanicilari" listesindeki
+    /// yetkili hesaplarını (arşiv kayıt, yetkili birim, 3 etik kurul üyesi) oluşturur.
+    /// Böylece akışı denemek için her seferinde elle kayıt olup rol vermek gerekmez.
+    /// Canlı ortamda bu ayar olmadığı için hiçbir şey yapmaz.
+    /// </summary>
+    public static async Task TestKullanicilariniYukleAsync(IServiceProvider servisler, IConfiguration ayarlar, ILogger logger)
+    {
+        var sifre = ayarlar["TestKullanicilari:Sifre"];
+        var liste = ayarlar.GetSection("TestKullanicilari:Liste").GetChildren().ToList();
+        if (string.IsNullOrWhiteSpace(sifre) || liste.Count == 0)
+            return;
+
+        var kullaniciYoneticisi = servisler.GetRequiredService<UserManager<Kullanici>>();
+
+        foreach (var t in liste)
+        {
+            var email = t["Email"];
+            var rol = t["Rol"];
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(rol) || !Roller.Tumu.Contains(rol))
+                continue;
+            if (await kullaniciYoneticisi.FindByEmailAsync(email) is not null)
+                continue;
+
+            // Etik kurul 3 üyeyle sınırlı
+            if (rol == Roller.EtikKurul &&
+                (await kullaniciYoneticisi.GetUsersInRoleAsync(Roller.EtikKurul)).Count >= 3)
+            {
+                logger.LogWarning("Etik kurulda zaten 3 üye var, {Email} eklenmedi.", email);
+                continue;
+            }
+
+            var k = new Kullanici
+            {
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true,
+                Ad = t["Ad"] ?? "Test",
+                Soyad = t["Soyad"] ?? "Kullanıcı",
+                CalistigiBirim = t["Birim"] ?? "Test",
+                KurumsalEmail = email,
+                PhoneNumber = t["Telefon"],
+            };
+            var sonuc = await kullaniciYoneticisi.CreateAsync(k, sifre);
+            if (!sonuc.Succeeded)
+            {
+                logger.LogError("Test kullanıcısı oluşturulamadı ({Email}): {Hatalar}", email,
+                    string.Join(", ", sonuc.Errors.Select(e => e.Description)));
+                continue;
+            }
+            await kullaniciYoneticisi.AddToRoleAsync(k, rol);
+            logger.LogInformation("Test kullanıcısı oluşturuldu: {Email} ({Rol})", email, rol);
+        }
+    }
 }

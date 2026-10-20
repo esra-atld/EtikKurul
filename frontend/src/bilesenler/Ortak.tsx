@@ -29,9 +29,40 @@ export function Bildirim({
   )
 }
 
-/** Başvurunun durumunu evrak kaşesi gibi gösterir */
-export function DurumKasesi({ durum, buyuk = false }: { durum: BasvuruDurumu; buyuk?: boolean }) {
-  return <span className={`kase ${durumSinifi(durum)}${buyuk ? ' buyuk' : ''}`}>{DURUM_ADLARI[durum]}</span>
+/**
+ * Başvurunun durumunu gösterir.
+ * Başvuru sonuçlandıysa ve karar biliniyorsa (kabul verilirse):
+ * kabulde yeşil "Kabul edildi", redde kırmızı "Reddedildi" yazar.
+ */
+export function DurumKasesi({
+  durum,
+  buyuk = false,
+  kabul,
+}: {
+  durum: BasvuruDurumu
+  buyuk?: boolean
+  kabul?: boolean | null
+}) {
+  const sonuclandi = durum === 'Sonuclandi' || durum === 'Arsivlendi'
+  let sinif = durumSinifi(durum)
+  let yazi = DURUM_ADLARI[durum]
+  if (sonuclandi && kabul != null) {
+    sinif = kabul ? 'sonuc' : 'iade'
+    yazi = kabul ? 'Kabul edildi' : 'Reddedildi'
+  }
+  return <span className={`kase ${sinif}${buyuk ? ' buyuk' : ''}`}>{yazi}</span>
+}
+
+/** Karar özeti yazısı: kabulde yeşil, redde kırmızı */
+export function SonucYazisi({ sonuc }: { sonuc: string | null | undefined }) {
+  if (!sonuc) return null
+  return <span className={`sonuc-yazisi ${sonuctanKabul(sonuc) ? 'kabul' : 'red'}`}>{sonuc}</span>
+}
+
+/** Listelerdeki karar özetinden (ör. "Oy çokluğu ile reddedildi ...") kabul mü red mi olduğunu çıkarır */
+export function sonuctanKabul(sonuc: string | null | undefined): boolean | null {
+  if (!sonuc) return null
+  return !sonuc.toLocaleLowerCase('tr').includes('reddedildi')
 }
 
 /** Alanın hemen altında çıkan kırmızı uyarılar */

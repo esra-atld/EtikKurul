@@ -4,7 +4,7 @@ import { BASVURU_TURU_ADLARI, tarihSaat } from '../api/etiketler'
 import { hataMesaji } from '../api/istemci'
 import { basvuruApi } from '../api/servisler'
 import type { BasvuruOzet } from '../api/tipler'
-import { Alan, Bildirim, DurumKasesi, GeriBaglantisi } from '../bilesenler/Ortak'
+import { Alan, Bildirim, DurumKasesi, GeriBaglantisi, SonucYazisi, sonuctanKabul } from '../bilesenler/Ortak'
 
 export function BasvurularimSayfasi() {
   const navigate = useNavigate()
@@ -102,36 +102,58 @@ export function BasvurularimSayfasi() {
         )}
 
         {liste && liste.length > 0 && (
-          <ul className="basvuru-listesi">
-            {liste.map((b) => (
-              <li key={b.id}>
-                <div>
-                  <h3>
-                    <Link to={`/basvurular/${b.id}`}>{b.arastirmaAdi || 'Adsız taslak'}</Link>
-                  </h3>
-                  <div className="meta">
-                    Başvuru no {b.id} · {BASVURU_TURU_ADLARI[b.basvuruTuru]}
-                    {b.evrakKayitNo && <> · Evrak kayıt no {b.evrakKayitNo}</>}
-                    <br />
-                    {b.gonderimTarihi
-                      ? `Gönderildi: ${tarihSaat(b.gonderimTarihi)}`
-                      : `Son kayıt: ${tarihSaat(b.guncellemeTarihi)} · ${b.sonAdim}. adımda kaldınız`}
-                  </div>
-                </div>
-                <div className="dugmeler">
-                  <DurumKasesi durum={b.durum} />
-                  <Link className="dugme ikincil kucuk" to={`/basvurular/${b.id}`}>
-                    {b.durum === 'Taslak' ? 'Devam et' : 'Aç'}
-                  </Link>
-                  {b.durum === 'Taslak' && (
-                    <button className="dugme metin kucuk" onClick={() => sil(b)}>
-                      Sil
-                    </button>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="tablo-kap">
+            <table className="tablo yigin">
+              <thead>
+                <tr>
+                  <th>Başvuru</th>
+                  <th>Arşiv kaydı</th>
+                  <th>Durum</th>
+                  <th>
+                    <span className="gizli-baslik">İşlem</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {liste.map((b) => (
+                  <tr key={b.id}>
+                    <td>
+                      <strong>{b.arastirmaAdi || 'Adsız taslak'}</strong>
+                      <br />
+                      <span className="meta">
+                        No {b.id} · {BASVURU_TURU_ADLARI[b.basvuruTuru]}
+                        <br />
+                        {b.gonderimTarihi
+                          ? `Gönderildi ${tarihSaat(b.gonderimTarihi)}`
+                          : `Son kayıt ${tarihSaat(b.guncellemeTarihi)} · ${b.sonAdim}. adımda kaldınız`}
+                      </span>
+                    </td>
+                    <td data-baslik="Arşiv kaydı">{b.evrakKayitNo ?? <span className="meta">Henüz kaydedilmedi</span>}</td>
+                    <td data-baslik="Durum">
+                      <DurumKasesi durum={b.durum} kabul={sonuctanKabul(b.sonuc)} />
+                      {b.sonuc && (
+                        <div style={{ marginTop: 6 }}>
+                          <SonucYazisi sonuc={b.sonuc} />
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      <div className="dugmeler">
+                        <Link className="dugme ikincil kucuk" to={`/basvurular/${b.id}`}>
+                          {b.durum === 'Taslak' ? 'Devam et' : 'Aç'}
+                        </Link>
+                        {b.durum === 'Taslak' && (
+                          <button className="dugme metin kucuk" onClick={() => sil(b)}>
+                            Sil
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </>

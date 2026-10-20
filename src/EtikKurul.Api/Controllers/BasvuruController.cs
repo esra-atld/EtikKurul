@@ -24,6 +24,7 @@ public class BasvuruController(AppDbContext db) : ControllerBase
     {
         var kullaniciId = User.KullaniciId();
         var liste = await db.Basvurular.AsNoTracking()
+            .Include(b => b.Karar)
             .Where(b => b.BasvuranKullaniciId == kullaniciId)
             .OrderByDescending(b => b.GuncellemeTarihi)
             .ToListAsync();
@@ -191,6 +192,29 @@ public class BasvuruController(AppDbContext db) : ControllerBase
 
         var ekTurleri = await db.EkTurleri.AsNoTracking().ToListAsync();
         return EkKuralServisi.Hesapla(basvuru, ekTurleri);
+    }
+
+    /// <summary>
+    /// "Başvurum nerede?": başvurunun geçtiği bütün aşamalar ve (iletildiyse) etik kurul kararı.
+    /// Yetkililerin adları başvurana gösterilmez.
+    /// </summary>
+    [HttpGet("{id:int}/takip")]
+    public async Task<ActionResult<TakipDto>> Takip(int id)
+    {
+        var b = await db.Basvurular.AsNoTracking()
+            .Include(x => x.Hareketler)
+            .Include(x => x.Karar)
+            .FirstOrDefaultAsync(x => x.Id == id);
+        if (b is null || b.BasvuranKullaniciId != User.KullaniciId())
+            return NotFound(new { mesaj = "Başvuru bulunamadı." });
+
+        var kararIletildi = b.Durum is BasvuruDurumu.KararDekanlikta or BasvuruDurumu.Sonuclandi or BasvuruDurumu.Arsivlendi;
+        return new TakipDto(
+            b.Durum,
+            b.EvrakKayitNo,
+            b.EvrakKayitTarihi,
+            YonetimController.HareketleriCevir(b, kisiAdlariGosterilsin: false),
+            kararIletildi ? YonetimController.KararCevir(b.Karar) : null);
     }
 
     // ─────────────────────────── Yardımcılar ───────────────────────────

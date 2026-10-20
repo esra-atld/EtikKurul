@@ -7,6 +7,8 @@ import { BasvuruSayfasi } from './sayfalar/basvuru/BasvuruSayfasi'
 import { GirisSayfasi } from './sayfalar/GirisSayfasi'
 import { KayitSayfasi } from './sayfalar/KayitSayfasi'
 import { ProfilSayfasi } from './sayfalar/ProfilSayfasi'
+import { GorevlerSayfasi } from './sayfalar/yonetim/GorevlerSayfasi'
+import { YonetimBasvuruSayfasi } from './sayfalar/yonetim/YonetimBasvuruSayfasi'
 
 // Sayfa adresleri
 export default function App() {
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="/basvurular" element={<BasvurularimSayfasi />} />
           <Route path="/basvurular/:id" element={<BasvuruSayfasi />} />
           <Route path="/admin" element={<AdminSayfasi />} />
+          <Route path="/gorevler" element={<GorevlerSayfasi />} />
+          <Route path="/gorevler/:id" element={<YonetimBasvuruSayfasi />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -40,6 +40,16 @@ export function BasvuruSayfasi() {
   const [hata, setHata] = useState<{ mesaj: string; ayrintilar: string[] } | null>(null)
   // Backend'in eksik kontrolü (her kayıttan sonra yenilenir); uyarılar ilgili alanın altında gösterilir
   const [eksikler, setEksikler] = useState<EksikAlan[]>([])
+  // Başvuru sonuçlandıysa karar kabul mü red mi (üstteki durum yazısının rengi için)
+  const [kabul, setKabul] = useState<boolean | null>(null)
+  const sonuclandi = basvuru?.durum === 'Sonuclandi' || basvuru?.durum === 'Arsivlendi'
+  useEffect(() => {
+    if (!sonuclandi) return
+    basvuruApi
+      .takip(basvuruId)
+      .then((t) => setKabul(t.karar ? t.karar.kararTuru === 'Uygun' : null))
+      .catch(() => setKabul(null))
+  }, [sonuclandi, basvuruId])
 
   // ───── Yükleme ─────
   const eksikleriYukle = useCallback(async (b: BasvuruDetay) => {
@@ -156,7 +166,7 @@ export function BasvuruSayfasi() {
           </p>
           <h1 style={{ marginTop: 6 }}>{form.arastirmaAdi || 'Adsız başvuru'}</h1>
         </div>
-        <DurumKasesi durum={basvuru.durum} buyuk />
+        <DurumKasesi durum={basvuru.durum} buyuk kabul={kabul} />
       </div>
 
       <div className="sihirbaz">

@@ -96,5 +96,6 @@ public class Basvuru
     public List<BasvuruSecenek> Secimler { get; set; } = [];
     public List<Ek> Ekler { get; set; } = [];
     public List<BasvuruHareketi> Hareketler { get; set; } = [];
+    public List<EtikKurulOyu> Oylar { get; set; } = [];
     public Karar? Karar { get; set; }
 }

@@ -255,7 +255,7 @@ public class BasvuruBelgeController(
 
         b.GonderimTarihi = DateTime.UtcNow;
         IsAkisi.DurumDegistir(b, BasvuruDurumu.EvrakKayitta, User.KullaniciId(),
-            "Başvuru gönderildi, evrak kaydı bekleniyor.");
+            "Başvuru gönderildi, arşiv kaydı bekleniyor.");
         await db.SaveChangesAsync();
 
         // TODO (e-posta adımı): Evrak Kayıt ve Etik Kurul'a bildirim maili gönder.

@@ -14,20 +14,20 @@ import type {
 
 export const ROL_ADLARI: Record<Rol, string> = {
   Basvuran: 'Başvuran',
-  EvrakKayit: 'Evrak Kayıt',
-  Dekanlik: 'Dekanlık',
-  EtikKurul: 'Etik Kurul',
+  EvrakKayit: 'Arşiv Kayıt',
+  Dekanlik: 'Yetkili Birim',
+  EtikKurul: 'Etik Kurul Üyesi',
   Admin: 'Yönetici',
 }
 
 export const DURUM_ADLARI: Record<BasvuruDurumu, string> = {
   Taslak: 'Taslak',
   ImzaliBelgeBekleniyor: 'İmzalı belgeler bekleniyor',
-  EvrakKayitta: 'Evrak kayıtta',
+  EvrakKayitta: 'Arşiv kayıtta',
   IadeEdildi: 'İade edildi',
-  Dekanlikta: 'Dekanlıkta',
-  EtikKurulda: 'Etik kurulda',
-  KararDekanlikta: 'Karar dekanlıkta',
+  Dekanlikta: 'Yetkili birimde',
+  EtikKurulda: 'Etik kurulda (oylamada)',
+  KararDekanlikta: 'Karar yetkili birimde',
   Sonuclandi: 'Sonuçlandı',
   Arsivlendi: 'Arşivlendi',
 }

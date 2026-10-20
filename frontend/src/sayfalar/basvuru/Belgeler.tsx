@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { tarihSaat } from '../../api/etiketler'
 import { hataMesaji } from '../../api/istemci'
 import { basvuruApi } from '../../api/servisler'
-import type { Arastirmaci, BasvuruDetay, GerekliEk, YuklenenEk } from '../../api/tipler'
+import type { Arastirmaci, BasvuruDetay, GerekliEk, Takip, YuklenenEk } from '../../api/tipler'
+import { BasvuruTakibi, KararKutusu } from '../../bilesenler/BasvuruTakibi'
 import { Bildirim } from '../../bilesenler/Ortak'
 
 const MAKS_MB = 10
@@ -24,6 +25,7 @@ export function Adim9Belgeler({
     null,
   )
   const [isleniyor, setIsleniyor] = useState(false)
+  const [takip, setTakip] = useState<Takip | null>(null)
 
   const belgeAsamasi = basvuru.durum === 'ImzaliBelgeBekleniyor'
   const gonderildi = !['Taslak', 'ImzaliBelgeBekleniyor', 'IadeEdildi'].includes(basvuru.durum)
@@ -38,6 +40,12 @@ export function Adim9Belgeler({
     if (basvuru.durum === 'Taslak') return
     listeleriYukle().catch((e) => setMesaj({ tur: 'hata', metin: hataMesaji(e).mesaj }))
   }, [basvuru.durum, listeleriYukle])
+
+  // Gönderilmiş başvuru: "başvurum nerede?" bilgisi
+  useEffect(() => {
+    if (!gonderildi) return
+    basvuruApi.takip(basvuru.id).then(setTakip).catch(() => setTakip(null))
+  }, [gonderildi, basvuru.id, basvuru.durum])
 
   async function islem(fn: () => Promise<unknown>, basariMetni?: string) {
     setIsleniyor(true)
@@ -133,12 +141,21 @@ export function Adim9Belgeler({
       <h2>Belgeler ve gönderim</h2>
 
       {gonderildi ? (
-        <Bildirim
-          tur="basari"
-          mesaj={`Başvurunuz ${tarihSaat(basvuru.gonderimTarihi)} tarihinde gönderildi.${
-            basvuru.evrakKayitNo ? ` Evrak kayıt numarası: ${basvuru.evrakKayitNo}.` : ' Evrak kaydı bekleniyor.'
-          }`}
-        />
+        <>
+          <Bildirim tur="basari" mesaj={`Başvurunuz ${tarihSaat(basvuru.gonderimTarihi)} tarihinde gönderildi.`} />
+          {takip?.karar && <KararKutusu karar={takip.karar} />}
+          <h3 style={{ marginTop: 20 }}>Başvurum nerede?</h3>
+          {takip ? (
+            <BasvuruTakibi
+              hareketler={takip.hareketler}
+              evrakKayitNo={takip.evrakKayitNo}
+              evrakKayitTarihi={takip.evrakKayitTarihi}
+            />
+          ) : (
+            <p className="bos">Yükleniyor…</p>
+          )}
+          <h3 style={{ marginTop: 20 }}>Gönderdiğiniz belgeler</h3>
+        </>
       ) : (
         <ol style={{ paddingLeft: 20, marginTop: 0 }}>
           <li>

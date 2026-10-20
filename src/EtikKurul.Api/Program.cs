@@ -133,6 +133,8 @@ using (var kapsam = app.Services.CreateScope())
     }
 
     await BaslangicVerisi.YukleAsync(servisler, app.Configuration, logger);
+    if (app.Environment.IsDevelopment())
+        await BaslangicVerisi.TestKullanicilariniYukleAsync(servisler, app.Configuration, logger);
 }
 
 // ───────────── 7) İSTEK HATTI (sıra önemli) ─────────────

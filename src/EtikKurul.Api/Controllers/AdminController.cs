@@ -63,6 +63,18 @@ public class AdminController(UserManager<Kullanici> kullaniciYoneticisi) : Contr
             return BadRequest(new { mesaj = "Kendi Admin rolünüzü kaldıramazsınız." });
 
         var mevcut = await kullaniciYoneticisi.GetRolesAsync(kullanici);
+
+        // Etik kurulun 3 üyesi olur; 4. kişiye bu rol verilemez
+        if (istek.Roller.Contains(Roller.EtikKurul) && !mevcut.Contains(Roller.EtikKurul))
+        {
+            var uyeSayisi = (await kullaniciYoneticisi.GetUsersInRoleAsync(Roller.EtikKurul)).Count;
+            if (uyeSayisi >= YonetimController.EtikKurulUyeSayisi)
+                return BadRequest(new
+                {
+                    mesaj = $"Etik kurulun {YonetimController.EtikKurulUyeSayisi} üyesi zaten tanımlı. " +
+                            "Yeni üye eklemek için önce bir üyenin etik kurul yetkisini kaldırın.",
+                });
+        }
         var cikarilacak = mevcut.Except(istek.Roller).ToList();
         var eklenecek = istek.Roller.Distinct().Except(mevcut).ToList();
 

@@ -202,13 +202,28 @@ public class KararYapilandirmasi : IEntityTypeConfiguration<Karar>
 {
     public void Configure(EntityTypeBuilder<Karar> b)
     {
-        b.Property(x => x.KararNo).HasMaxLength(50).IsRequired();
+        b.Property(x => x.KararNo).HasMaxLength(50);
         b.Property(x => x.KararBelgesiDosyaAdi).HasMaxLength(100);
         b.HasIndex(x => x.KararNo).IsUnique();
         b.HasIndex(x => x.DogrulamaKodu).IsUnique();
 
         b.HasOne(x => x.KararVerenKullanici).WithMany()
             .HasForeignKey(x => x.KararVerenKullaniciId).OnDelete(DeleteBehavior.Restrict);
+    }
+}
+
+public class EtikKurulOyuYapilandirmasi : IEntityTypeConfiguration<EtikKurulOyu>
+{
+    public void Configure(EntityTypeBuilder<EtikKurulOyu> b)
+    {
+        // Bir üye bir başvuruya bir kez oy verir
+        b.HasIndex(x => new { x.BasvuruId, x.UyeKullaniciId }).IsUnique();
+        b.HasIndex(x => x.UyeKullaniciId);
+
+        b.HasOne(x => x.Basvuru).WithMany(x => x.Oylar)
+            .HasForeignKey(x => x.BasvuruId).OnDelete(DeleteBehavior.Cascade);
+        b.HasOne(x => x.UyeKullanici).WithMany()
+            .HasForeignKey(x => x.UyeKullaniciId).OnDelete(DeleteBehavior.Restrict);
     }
 }
 

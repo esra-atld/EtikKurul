@@ -112,7 +112,8 @@ public record BasvuruOzetDto(
     string? EvrakKayitNo,
     DateTime OlusturmaTarihi,
     DateTime GuncellemeTarihi,
-    DateTime? GonderimTarihi);
+    DateTime? GonderimTarihi,
+    string? Sonuc); // Etik kurul kararı başvurana iletildiyse özeti, değilse null
 
 // ───── Tekrarlanan bölümlerin satırları ─────
 

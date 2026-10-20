@@ -181,6 +181,62 @@ export interface BasvuruOzet {
   olusturmaTarihi: string
   guncellemeTarihi: string
   gonderimTarihi: string | null
+  /** Etik kurul oylaması bittiyse kararın özeti (ör. "Oy birliği ile kabul edildi (3 kabul, 0 red)") */
+  sonuc: string | null
+}
+
+// ───── Başvuru takibi ve yetkili işlemleri ─────
+
+export interface Hareket {
+  tarih: string
+  oncekiDurum: BasvuruDurumu | null
+  yeniDurum: BasvuruDurumu
+  aciklama: string | null
+  islemYapan: string | null
+}
+
+export interface KararOzet {
+  kararTuru: 'Uygun' | 'UygunDegil' | 'DuzeltmeIstenir'
+  oyBirligiMi: boolean
+  kabulOySayisi: number
+  redOySayisi: number
+  kararTarihi: string
+  ozet: string
+}
+
+export interface Takip {
+  durum: BasvuruDurumu
+  evrakKayitNo: string | null
+  evrakKayitTarihi: string | null
+  hareketler: Hareket[]
+  karar: KararOzet | null
+}
+
+export type GorevKutusu = 'arsiv-gelen' | 'arsiv' | 'birim' | 'birim-izlenen' | 'oy-bekleyen' | 'oy-verilen'
+
+export interface YonetimOzet {
+  id: number
+  arastirmaAdi: string
+  basvuranAdSoyad: string
+  basvuranBirim: string
+  durum: BasvuruDurumu
+  evrakKayitNo: string | null
+  evrakKayitTarihi: string | null
+  gonderimTarihi: string | null
+  sonuc: string | null
+  benimOyum: boolean | null
+}
+
+export type YonetimIslemi = 'ArsiveKaydet' | 'EtikKuruluGonder' | 'OyVer' | 'BasvuranaIlet'
+
+export interface YonetimDetay {
+  basvuru: BasvuruDetay
+  basvuran: { adSoyad: string; calistigiBirim: string; email: string; kurumsalEmail: string; telefon: string | null }
+  hareketler: Hareket[]
+  ekler: YuklenenEk[]
+  oylama: { uyeSayisi: number; oyVerenSayisi: number; benimOyum: boolean | null; benimOyumBekleniyor: boolean } | null
+  karar: KararOzet | null
+  islemler: YonetimIslemi[]
 }
 
 // ───── Tanımlar ─────

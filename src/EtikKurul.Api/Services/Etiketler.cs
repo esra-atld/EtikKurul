@@ -9,11 +9,11 @@ public static class Etiketler
     {
         BasvuruDurumu.Taslak => "Taslak",
         BasvuruDurumu.ImzaliBelgeBekleniyor => "İmzalı belgeler bekleniyor",
-        BasvuruDurumu.EvrakKayitta => "Evrak kayıtta",
+        BasvuruDurumu.EvrakKayitta => "Arşiv kayıtta",
         BasvuruDurumu.IadeEdildi => "Başvurana iade edildi",
-        BasvuruDurumu.Dekanlikta => "Dekanlıkta",
-        BasvuruDurumu.EtikKurulda => "Etik kurulda inceleniyor",
-        BasvuruDurumu.KararDekanlikta => "Karar dekanlıkta",
+        BasvuruDurumu.Dekanlikta => "Yetkili birimde",
+        BasvuruDurumu.EtikKurulda => "Etik kurulda (oylamada)",
+        BasvuruDurumu.KararDekanlikta => "Karar yetkili birimde",
         BasvuruDurumu.Sonuclandi => "Sonuçlandı",
         BasvuruDurumu.Arsivlendi => "Arşivlendi",
         _ => d.ToString(),
@@ -73,6 +73,12 @@ public static class Etiketler
         KararTuru.DuzeltmeIstenir => "Düzeltme İstenir",
         _ => k.ToString(),
     };
+
+    /// <summary>Ör. "Oy birliği ile kabul edildi (3 kabul, 0 red)"</summary>
+    public static string KararOzeti(Entities.Karar k) =>
+        $"{(k.OyBirligiMi ? "Oy birliği" : "Oy çokluğu")} ile " +
+        $"{(k.KararTuru == KararTuru.Uygun ? "kabul edildi" : "reddedildi")} " +
+        $"({k.KabulOySayisi} kabul, {k.RedOySayisi} red)";
 
     public static string EvetHayir(bool? deger) => deger switch
     {

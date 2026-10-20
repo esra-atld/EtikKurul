@@ -37,6 +37,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
     // ───── İş akışı, karar, bildirim ─────
     public DbSet<BasvuruHareketi> BasvuruHareketleri => Set<BasvuruHareketi>();
     public DbSet<Karar> Kararlar => Set<Karar>();
+    public DbSet<EtikKurulOyu> EtikKurulOylari => Set<EtikKurulOyu>();
     public DbSet<Bildirim> Bildirimler => Set<Bildirim>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder ayarlar)

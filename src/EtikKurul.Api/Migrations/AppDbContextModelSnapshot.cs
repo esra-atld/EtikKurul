@@ -643,6 +643,40 @@ namespace EtikKurul.Api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EtikKurul.Api.Entities.EtikKurulOyu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BasvuruId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("GonderimTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("Onayladi")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("OyTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UyeKullaniciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UyeKullaniciId");
+
+                    b.HasIndex("BasvuruId", "UyeKullaniciId")
+                        .IsUnique();
+
+                    b.ToTable("EtikKurulOylari");
+                });
+
             modelBuilder.Entity("EtikKurul.Api.Entities.GiderKalemi", b =>
                 {
                     b.Property<int>("Id")
@@ -729,12 +763,14 @@ namespace EtikKurul.Api.Migrations
                     b.Property<Guid>("DogrulamaKodu")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("KabulOySayisi")
+                        .HasColumnType("int");
+
                     b.Property<string>("KararBelgesiDosyaAdi")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("KararNo")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -747,11 +783,16 @@ namespace EtikKurul.Api.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("KararVerenKullaniciId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("OlusturmaTarihi")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("OyBirligiMi")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RedOySayisi")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -762,7 +803,8 @@ namespace EtikKurul.Api.Migrations
                         .IsUnique();
 
                     b.HasIndex("KararNo")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[KararNo] IS NOT NULL");
 
                     b.HasIndex("KararVerenKullaniciId");
 
@@ -1556,6 +1598,25 @@ namespace EtikKurul.Api.Migrations
                     b.Navigation("YukleyenKullanici");
                 });
 
+            modelBuilder.Entity("EtikKurul.Api.Entities.EtikKurulOyu", b =>
+                {
+                    b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
+                        .WithMany("Oylar")
+                        .HasForeignKey("BasvuruId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EtikKurul.Api.Entities.Kullanici", "UyeKullanici")
+                        .WithMany()
+                        .HasForeignKey("UyeKullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+
+                    b.Navigation("UyeKullanici");
+                });
+
             modelBuilder.Entity("EtikKurul.Api.Entities.GiderKalemi", b =>
                 {
                     b.HasOne("EtikKurul.Api.Entities.Basvuru", "Basvuru")
@@ -1589,8 +1650,7 @@ namespace EtikKurul.Api.Migrations
                     b.HasOne("EtikKurul.Api.Entities.Kullanici", "KararVerenKullanici")
                         .WithMany()
                         .HasForeignKey("KararVerenKullaniciId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Basvuru");
 
@@ -1698,6 +1758,8 @@ namespace EtikKurul.Api.Migrations
                     b.Navigation("Karar");
 
                     b.Navigation("LiteraturKaynaklari");
+
+                    b.Navigation("Oylar");
 
                     b.Navigation("Riskler");
 

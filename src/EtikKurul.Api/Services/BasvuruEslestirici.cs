@@ -124,7 +124,11 @@ public static class BasvuruEslestirici
 
     public static BasvuruOzetDto OzeteCevir(Basvuru b) => new(
         b.Id, b.ArastirmaAdi, b.BasvuruTuru, b.Durum, b.SonAdim,
-        b.EvrakKayitNo, b.OlusturmaTarihi, b.GuncellemeTarihi, b.GonderimTarihi);
+        b.EvrakKayitNo, b.OlusturmaTarihi, b.GuncellemeTarihi, b.GonderimTarihi,
+        // Etik kurul oylaması bitince karar başvurana da görünür (yetkili birim iletmeden önce de)
+        b.Karar is not null && b.Durum is BasvuruDurumu.KararDekanlikta or BasvuruDurumu.Sonuclandi or BasvuruDurumu.Arsivlendi
+            ? Etiketler.KararOzeti(b.Karar)
+            : null);
 
     /// <summary>Başvuran formu sadece taslakken veya iade edildiğinde, kilitli değilse değiştirebilir.</summary>
     public static bool DuzenlenebilirMi(Basvuru b) =>

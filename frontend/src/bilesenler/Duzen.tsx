@@ -2,6 +2,7 @@
 
 import { Link, NavLink, Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { useOturum } from '../oturum/OturumBaglami'
+import { sekmelerim } from '../sayfalar/yonetim/GorevlerSayfasi'
 
 export function Duzen() {
   const { kullanici, cikisYap, rolVarMi } = useOturum()
@@ -27,6 +28,7 @@ export function Duzen() {
                 Ana sayfa
               </NavLink>
               <NavLink to="/basvurular">Başvurularım</NavLink>
+              {sekmelerim(kullanici.roller).length > 0 && <NavLink to="/gorevler">Görevlerim</NavLink>}
               {rolVarMi('Admin') && <NavLink to="/admin">Kullanıcılar ve yetkiler</NavLink>}
             </nav>
           )}

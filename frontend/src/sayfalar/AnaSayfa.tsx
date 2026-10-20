@@ -6,8 +6,9 @@ import { ROL_ADLARI, tarihSaat } from '../api/etiketler'
 import { hataMesaji } from '../api/istemci'
 import { basvuruApi } from '../api/servisler'
 import type { BasvuruOzet } from '../api/tipler'
-import { Bildirim, DurumKasesi } from '../bilesenler/Ortak'
+import { Bildirim, DurumKasesi, sonuctanKabul } from '../bilesenler/Ortak'
 import { useOturum } from '../oturum/OturumBaglami'
+import { sekmelerim } from './yonetim/GorevlerSayfasi'
 
 export function AnaSayfa() {
   const { kullanici } = useOturum()
@@ -23,6 +24,7 @@ export function AnaSayfa() {
   }, [])
 
   if (!kullanici) return null
+  const gorevliMi = sekmelerim(kullanici.roller).length > 0
 
   const taslaklar = liste?.filter((b) => b.durum === 'Taslak' || b.durum === 'ImzaliBelgeBekleniyor') ?? []
   const gonderilenler = liste?.filter((b) => b.durum !== 'Taslak' && b.durum !== 'ImzaliBelgeBekleniyor') ?? []
@@ -40,6 +42,23 @@ export function AnaSayfa() {
       {hata && <Bildirim tur="hata" mesaj={hata} />}
 
       <div className="ana-izgara">
+        {gorevliMi ? (
+          <>
+            {/* Görevliler (arşiv, yetkili birim, kurul üyesi) için görevler önce gelir */}
+                  <section className="kart">
+            <h2>Görevlerim</h2>
+            <p>Size gelen başvuruları inceleyip işlem yapın.</p>
+            <div className="dugmeler">
+              {sekmelerim(kullanici.roller)
+                .filter((s) => s.kutu !== 'arsiv' && s.kutu !== 'oy-verilen' && s.kutu !== 'birim-izlenen')
+                .map((s) => (
+                  <Link key={s.kutu} className="dugme ikincil kucuk" to={`/gorevler?kutu=${s.kutu}`}>
+                    {s.ad}
+                  </Link>
+                ))}
+            </div>
+          </section>
+            <div className="sag-sutun">
         <section className="kart">
           <h2>Başvurularım</h2>
           {liste === null && !hata && <p className="bos">Yükleniyor…</p>}
@@ -86,7 +105,7 @@ export function AnaSayfa() {
                   {gonderilenler.slice(0, 3).map((b) => (
                     <li key={b.id}>
                       <Link to={`/basvurular/${b.id}`}>{b.arastirmaAdi}</Link>
-                      <DurumKasesi durum={b.durum} />
+                      <DurumKasesi durum={b.durum} kabul={sonuctanKabul(b.sonuc)} />
                     </li>
                   ))}
                 </ul>
@@ -103,7 +122,6 @@ export function AnaSayfa() {
             </>
           )}
         </section>
-
         <section className="kart">
           <h2>Kişi bilgilerim</h2>
           <KisiBilgileri />
@@ -111,6 +129,84 @@ export function AnaSayfa() {
             Ayrıntıları görüntüle
           </Link>
         </section>
+            </div>
+          </>
+        ) : (
+          <>
+        <section className="kart">
+          <h2>Başvurularım</h2>
+          {liste === null && !hata && <p className="bos">Yükleniyor…</p>}
+
+          {liste && liste.length === 0 && (
+            <>
+              <Bildirim tur="bilgi" mesaj="Henüz bir etik kurul başvurunuz bulunmuyor." />
+              <button className="dugme" onClick={() => navigate('/basvurular?yeni=1')}>
+                Yeni başvuru başlat
+              </button>
+            </>
+          )}
+
+          {liste && liste.length > 0 && (
+            <>
+              <dl className="sayilar">
+                <div>
+                  <dt>Devam eden</dt>
+                  <dd>{taslaklar.length}</dd>
+                </div>
+                <div>
+                  <dt>Gönderilen</dt>
+                  <dd>{gonderilenler.length}</dd>
+                </div>
+              </dl>
+
+              {sonTaslak && (
+                <div className="son-taslak">
+                  <p>
+                    <strong>{sonTaslak.arastirmaAdi || 'Adsız taslak'}</strong>
+                    <br />
+                    <span className="meta">
+                      Son kayıt {tarihSaat(sonTaslak.guncellemeTarihi)} · {sonTaslak.sonAdim}. adımda kaldınız
+                    </span>
+                  </p>
+                  <Link className="dugme" to={`/basvurular/${sonTaslak.id}`}>
+                    Kaldığım yerden devam et
+                  </Link>
+                </div>
+              )}
+
+              {gonderilenler.length > 0 && (
+                <ul className="kisa-liste">
+                  {gonderilenler.slice(0, 3).map((b) => (
+                    <li key={b.id}>
+                      <Link to={`/basvurular/${b.id}`}>{b.arastirmaAdi}</Link>
+                      <DurumKasesi durum={b.durum} kabul={sonuctanKabul(b.sonuc)} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="dugmeler" style={{ marginTop: 16 }}>
+                <Link className="dugme ikincil" to="/basvurular">
+                  Bütün başvurularım
+                </Link>
+                <button className="dugme metin" onClick={() => navigate('/basvurular?yeni=1')}>
+                  Yeni başvuru başlat
+                </button>
+              </div>
+            </>
+          )}
+        </section>
+            <div className="sag-sutun">
+        <section className="kart">
+          <h2>Kişi bilgilerim</h2>
+          <KisiBilgileri />
+          <Link className="dugme ikincil kucuk" to="/profil" style={{ marginTop: 8 }}>
+            Ayrıntıları görüntüle
+          </Link>
+        </section>
+            </div>
+          </>
+        )}
       </div>
     </>
   )
